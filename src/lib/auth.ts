@@ -31,13 +31,32 @@ declare module "next-auth/jwt" {
 /** Refresh a little before expiry so an in-flight request never races the TTL. */
 const REFRESH_SKEW_SECONDS = 120;
 
-const providers: Provider[] = [
-  Google({
-    clientId: process.env.AUTH_GOOGLE_ID,
-    clientSecret: process.env.AUTH_GOOGLE_SECRET,
-    allowDangerousEmailAccountLinking: true
-  })
-];
+/**
+ * Which sign-in methods this deployment can actually offer.
+ *
+ * A preview deployment may not have OAuth or mail credentials yet. Registering a
+ * provider with an empty client id would make Auth.js fail with an opaque error
+ * at the redirect, so providers are only registered when they are usable and the
+ * login page reports the rest as not configured.
+ */
+export function authProviderAvailability(): { google: boolean; email: boolean } {
+  return {
+    google: Boolean(process.env.AUTH_GOOGLE_ID && process.env.AUTH_GOOGLE_SECRET),
+    email: Boolean(process.env.AUTH_RESEND_KEY)
+  };
+}
+
+const providers: Provider[] = [];
+
+if (process.env.AUTH_GOOGLE_ID && process.env.AUTH_GOOGLE_SECRET) {
+  providers.push(
+    Google({
+      clientId: process.env.AUTH_GOOGLE_ID,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET,
+      allowDangerousEmailAccountLinking: true
+    })
+  );
+}
 
 /**
  * Email magic link.

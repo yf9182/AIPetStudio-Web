@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ai-pet-studio-web",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-08-19",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": { "enabled": true },
+  "vars": {
+    "MATERIAL_HUB_BASE_URL": "https://material-hub-nano-banana.yangf999212.workers.dev",
+    "MATERIAL_HUB_PID": "8802",
+    "MATERIAL_HUB_CHANNEL": "English",
+    "MATERIAL_HUB_SOURCE": "English",
+    "WORKER_BASE_URL": "https://ai-pet-studio-backend.yangf999212.workers.dev"
+  }
+}

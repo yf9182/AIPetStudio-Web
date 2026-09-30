@@ -1,0 +1,142 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens extracted from the reference design system
+ * (morphic.com dark theme, measured via computed styles at 1440px).
+ *
+ * Every value here is a measured value, not a guess:
+ *   page background      #000000
+ *   heading colour       #FAFAFA   (52/700/-2.5px, 40/700/-2px)
+ *   muted text           #737373
+ *   card surface         rgba(255,255,255,0.03), radius 8px
+ *   panel surface        rgba(255,255,255,0.04), radius 16px
+ *   accent               #0075FF
+ *   content width        992px inside a 1040px container (24px gutters)
+ */
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink-950: #000000;
+  --color-ink-900: #0a0a0a;
+  --color-ink-850: #171717;
+  --color-ink-800: #242424;
+  --color-ink-700: #404040;
+  --color-ink-600: #525252;
+  --color-ink-500: #737373;
+  --color-ink-400: #a1a1a1;
+  --color-ink-300: #d4d4d4;
+  --color-ink-200: #e5e5e5;
+  --color-ink-100: #f5f5f5;
+  --color-ink-50: #fafafa;
+
+  --color-brand: #0075ff;
+  --color-brand-hover: #0068e3;
+  --color-brand-soft: rgba(0, 117, 255, 0.14);
+
+  /* Type scale measured on the reference page. */
+  --text-display: 52px;
+  --text-display--line-height: 60px;
+  --text-display--letter-spacing: -2.5px;
+  --text-display--font-weight: 700;
+
+  --text-headline: 40px;
+  --text-headline--line-height: 48px;
+  --text-headline--letter-spacing: -2px;
+  --text-headline--font-weight: 700;
+
+  --text-title: 14px;
+  --text-title--line-height: 19.25px;
+  --text-title--letter-spacing: -0.14px;
+  --text-title--font-weight: 600;
+
+  --text-nav: 14px;
+  --text-nav--line-height: 20.16px;
+  --text-nav--font-weight: 500;
+
+  --text-chip: 13px;
+  --text-chip--line-height: 19.5px;
+  --text-chip--font-weight: 500;
+
+  --text-micro: 12.5px;
+  --text-micro--line-height: 18.75px;
+
+  /* Radii measured on the reference page. */
+  --radius-card: 8px;
+  --radius-panel: 12px;
+  --radius-panel-lg: 16px;
+  --radius-tile: 19px;
+
+  --container-page: 1040px;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-ink-950);
+    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-ink-950);
+    color: var(--color-ink-50);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--color-brand);
+    color: #ffffff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+  }
+
+  /* Reference site hides native video controls chrome on decorative loops. */
+  video::-webkit-media-controls {
+    display: none !important;
+  }
+}
+
+@utility container-page {
+  width: 100%;
+  max-width: var(--container-page);
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+/* 1px inset hairline used on cards in the reference design. */
+@utility slight-outline {
+  outline: 1px solid rgba(255, 255, 255, 0.08);
+  outline-offset: -1px;
+  pointer-events: none;
+}
+
+@utility text-balance-tight {
+  text-wrap: balance;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility animate-rise {
+  animation: rise 0.35s cubic-bezier(0, 0, 0.2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-rise {
+    animation: none;
+  }
+}
